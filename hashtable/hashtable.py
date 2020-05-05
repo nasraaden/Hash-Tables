@@ -73,20 +73,16 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        node = self.storage[index]
-        prev = None
-        while node is not None and node.key != key:
+        node = self.hash_table[index]
+        while True:
             # get to the end
-            prev = node
-            node = node.next
-        if node is None:
-            return None
-        else:
-            self.storage -= 1
-            if prev is None:
-                node = node.next
+            if node.key == key:
+                node.value = None
+                return
+            elif node.next is None:
+                return
             else:
-                prev.next = prev.next.next
+                node = node.next
 
     def get(self, key):
         """
