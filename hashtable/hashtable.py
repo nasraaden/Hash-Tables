@@ -1,6 +1,3 @@
-hash
-
-
 class HashTableEntry:
     """
     Hash Table entry, as a linked list node.
@@ -61,8 +58,18 @@ class HashTable:
         """
         self.storage += 1
         index = self.hash_index(key)
-        self.hash_table[index] = HashTableEntry(key, value)
-        return
+        node = self.hash_table[index]
+
+        if node is None:
+            self.hash_table[index] = HashTableEntry(key, value)
+            return
+
+        cur = node
+
+        while cur.next is not None:
+            cur = cur.next
+
+        cur.next = HashTableEntry(key, value)
 
     def delete(self, key):
         """
