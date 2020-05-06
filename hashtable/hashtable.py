@@ -64,12 +64,17 @@ class HashTable:
             self.hash_table[index] = HashTableEntry(key, value)
             return
 
+        prev = None
         cur = node
 
-        while cur.next is not None:
+        while cur is not None:
+            if cur.key == key:
+                cur.value = value
+                return
+            prev = cur
             cur = cur.next
 
-        cur.next = HashTableEntry(key, value)
+        prev.next = HashTableEntry(key, value)
 
     def delete(self, key):
         """
