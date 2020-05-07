@@ -56,6 +56,13 @@ class HashTable:
 
         Implement this.
         """
+        load = self.storage / self.capacity
+        load_factor = 0.7
+
+        if load > load_factor:
+            self.capacity = self.capacity * 2
+            self.resize()
+
         self.storage += 1
         index = self.hash_index(key)
         node = self.hash_table[index]
@@ -84,6 +91,13 @@ class HashTable:
 
         Implement this.
         """
+        load = self.storage / self.capacity
+        load_factor = 0.2
+
+        if load > load_factor:
+            self.capacity = self.capacity // 2
+            self.resize()
+
         index = self.hash_index(key)
         node = self.hash_table[index]
         while True:
@@ -120,6 +134,19 @@ class HashTable:
 
         Implement this.
         """
+
+        old_hash_table = self.hash_table
+        new_array = [None] * self.capacity
+        self.hash_table = new_array
+
+        self.storage = 0
+
+        #  iterate through old hash table and checking to see if it's not empty
+        for index in old_hash_table:
+            node = index
+            while node is not None:
+                self.put(node.key, node.value)
+                node = node.next
 
 
 if __name__ == "__main__":
